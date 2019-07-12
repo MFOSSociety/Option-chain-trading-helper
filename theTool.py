@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 csv_path = str(input('path to csv file? (example - wipro.csv)'))
 strikeprice = int(input('strike price ? :: '))
-data = pd.read_csv(path)
+data = pd.read_csv(csv_path)
 data['Date']= pd.to_datetime(data['Date'])
 pd.set_option('display.max_columns', 25)
 pd.set_option('display.width', 100)
