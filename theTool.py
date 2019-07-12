@@ -1,9 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-csv_name = str(input('Name of the csv file? (example - wipro.csv)'))
+csv_path = str(input('path to csv file? (example - wipro.csv)'))
 strikeprice = int(input('strike price ? :: '))
-data = pd.read_csv(f'C:\\Users\\keerti\\Downloads\\{csv_name}.csv')
+data = pd.read_csv(path)
 data['Date']= pd.to_datetime(data['Date'])
 pd.set_option('display.max_columns', 25)
 pd.set_option('display.width', 100)
