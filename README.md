@@ -16,12 +16,12 @@ A tool to help detect insider trading, by comparing Option chain prices against 
 - If the pyplot shows that the values dont follow the pattern, then we can say with some confidence that someone is trading on the inside or maybe someone is manipulating the prices. What often follows is a drastic change in all the values ( CE PE and the underlying value) 
 
 
-EXAMPLE : ![ICICPRU How a Put against u.value should look like](https://imgur.com/a/Y4Pi2Zc "ICICPRU How a Put against u.value should look like")
-           ![Alt text](relative/path/to/img.jpg?raw=true "Title")
+EXAMPLE : _ICICPRU How a Put against u.value should look like_ - https://imgur.com/a/Y4Pi2Zc 
+           
 
 This is the PE option type vs U.value for ICICIPRU . PE varies inversely with the underlying value as can be seen. This implies everything is normal.
 
-EXAMPLE 2: ![BHEL How a Call against u.value **should not** look like](https://imgur.com/a/vHtWDcZ)
+EXAMPLE 2: _BHEL How a Call against u.value **should not** look like_ - https://imgur.com/a/vHtWDcZ
 
 This is the CE option type vs U.value for BHEL. CE varies directly with underlying value but in the red circled area, the stock price drops and the CE option price doesnt. This means somebody knew that the stock price would go back up and hence they bought a lot of call options, you can see the stock price then did skyrocket, where this insider sold off their call options, making a huge profit. 
 
