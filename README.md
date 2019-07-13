@@ -11,7 +11,7 @@ A tool to help detect insider trading, by comparing Option Chain Prices against 
 - To Run:
 
 `git clone https://github.com/MFOSSociety/Option-chain-trading-helper.git`
-
+`cd Option-chain-trading-helper`
 `sudo python3 registration_window.py`
 
 - The graph shows true value for underlying value and a scaled value for the option type for easy comparison
