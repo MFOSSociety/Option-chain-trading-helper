@@ -1,8 +1,8 @@
-# Option-Chain-Trading-Helper
+﻿# Option-Chain-Trading-Helper
 A tool to help detect insider trading, by comparing Option Chain Prices against the Underlying Value of the Stock.
 
 
-## Use 
+# Use 
 
 - Visit this [link ](https://www.nseindia.com/products/content/derivatives/equities/historical_fo.htm)
 
@@ -10,13 +10,13 @@ A tool to help detect insider trading, by comparing Option Chain Prices against 
 - Download the CSV file
 - To Run:
 
-`git clone https://github.com/MFOSSociety/Option-chain-trading-helper.git`<br>
-`cd Option-chain-trading-helper`<br>
-`sudo python3 registration_window.py`<br>
+`git clone https://github.com/MFOSSociety/Option-chain-trading-helper.git`
+
+`sudo python3 registration_window.py`
 
 - The graph shows true value for underlying value and a scaled value for the option type for easy comparison
 
-## Working
+# The working - 
 - The option types we're interested in are Puts and Calls ( PE and CE) 
 - The knowledge relevant to our task is, the price of CE is directly proportional to the price of the stock (underlying value) and the price of PE is inversely proportional to the price of the stock. 
 - If the pyplot shows that the values dont follow the pattern, then we can say with some confidence that someone is trading on the inside or maybe someone is manipulating the prices. What often follows is a drastic change in all the values ( CE PE and the underlying value) 
