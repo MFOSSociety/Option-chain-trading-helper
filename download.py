@@ -1,7 +1,14 @@
+import os
+try:
+    os.system('sudo pip install nsepy')
+    os.system('sudo pip3 install nsepy')
+
+except:
+    pass
 from nsepy import get_history
 from datetime import date
 import time
-import os
+
 os.system('clear')
 print()
 print("Enter date in form of year,month,date")
