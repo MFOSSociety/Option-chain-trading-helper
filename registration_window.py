@@ -1,93 +1,104 @@
-import execute
-from PyQt4 import QtGui,QtCore
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+from nsepy import get_history
+from datetime import date, timedelta
+import time
+
+def call_execute(symbol, strike_price,  option_type, expiry_date):
+    os.system('clear')
+    print('\n')
+
+    expiry_date = expiry_date.split('-')
+
+    #option_type = input('option type? (CE/ PE)')
+    #start = list(map(int, input("Start Date [ year,month,date] [ 2015,1,1 ] ").split(",")))
+    #end = list(map(int, input("End Date [ year,month,date] [ 2015,1,10 ] ").split(",")))
+    #expiry_date = list(map(int, input("Expiry Date [ year,month,date] [ 2015,1,29 ] ").split(",")))
+
+    strike_price = int(strike_price)
+
+    start = str(date.today() - timedelta(days= 25 ))
+    end = str(date.today())
+    start = start.split('-')
+    end = end.split('-')
+
+    start[1] = start[1].replace('0', '')
+    end[1] = end[1].replace('0', '')
+    expiry_date[1] = expiry_date[1].replace('0', '')
+
+    stock_opt = get_history(symbol,
+                            start=date(int(start[0]), int(start[1]), int(start[2])),
+                            end=date(int(end[0]), int(end[1]), int(end[2])),
+                            option_type=option_type,
+                            strike_price=strike_price,
+                            expiry_date=date(int(expiry_date[0]), int(expiry_date[1]), int(expiry_date[2])))
+
+    stock_opt.to_excel('test.xlsx', encoding='latin-1')
+    print('stock opt')
 
 
-class RegistrationWindow(QtGui.QMainWindow):
-    #Registration window for student registration
+    data = pd.read_excel('test.xlsx',  error_bad_lines=False, encoding = 'latin-1')
+    print('read file')
 
-    def __init__(self):
-        super(RegistrationWindow, self).__init__()
-        self.text_field = QtGui.QPlainTextEdit(self)
-        self.text_field.setMinimumSize (800,600)
-        self.text_field.setStyleSheet("background-image: url(test.png);")
+    print(f'type {option_type}')
+    print(data.head())
 
 
-        #Creating Registration Window
-        self.setGeometry(300,50,800,600)
-        self.setWindowTitle("Chain Trading Helper")
+    data['Date']= pd.to_datetime(data['Date'])
+    pd.set_option('display.max_columns', 15)
+    pd.set_option('display.width', 100)
 
-        #Heading
-        h=QtGui.QLabel(self)
-        h.setAlignment(QtCore.Qt.AlignCenter)
-        h.setGeometry(QtCore.QRect(100,30,600,60))
-        h.setStyleSheet("QLabel { background-color : black;color :white ; }")
-        font=QtGui.QFont("Times",20,QtGui.QFont.Bold)
-        h.setFont(font)
-        h.setText("Welcome !")
+    dict = {'Date':[],'LTP':[],'STRIKE PRICE':[],'UNDERLYING VALUE':[]}
 
+   # data = data[data.iloc[:,16] != '-']
+   # data = data.reset_index()
+   # data = data.drop(columns =  ['index'])
 
-        #SET OF ENTRIES
-        #Taking Student's Name
-        l1=QtGui.QLabel(self)
-        l1.setAlignment(QtCore.Qt.AlignCenter)
-        l1.setGeometry(QtCore.QRect(190,150,130,30))
-        l1.setStyleSheet("QLabel { background-color : purple;color :white ; }")
-        font=QtGui.QFont("Times",14,QtGui.QFont.Bold)
-        l1.setFont(font)
-        l1.setText("File Name")
+    indicesofinterest = data[data['Strike Price']>=strike_price].index.values.astype(int)
 
-        self.e1=QtGui.QLineEdit(self)
-        self.e1.setGeometry(450,150,200,30)
-        self.e1.setAlignment(QtCore.Qt.AlignCenter)
-        font1=QtGui.QFont("Arial",14)
-        self.e1.setFont(font1)
+    for i in range(0,len(indicesofinterest)):
+        dict['Date'].append(data.iloc[indicesofinterest[i],:][0])
+        dict['STRIKE PRICE'].append(data.iloc[indicesofinterest[i],:][4])
+        dict['UNDERLYING VALUE'].append(data.iloc[indicesofinterest[i],:][16])
+        dict['LTP'].append(str(data.iloc[indicesofinterest[i],:][9] + data.iloc[indicesofinterest[1],:][16]))
 
-        #Taking Student's Registration Number
-        l2=QtGui.QLabel(self)
-        l2.setAlignment(QtCore.Qt.AlignCenter)
-        l2.setGeometry(QtCore.QRect(190,250,130,30))
-        l2.setStyleSheet("QLabel { background-color : purple;color :white ; }")
-        l2.setFont(font)
-        l2.setText("Strike Price")
+    frame = pd.DataFrame(dict)
 
-        self.e2=QtGui.QLineEdit(self)
-        self.e2.setGeometry(450,250,200,30)
-        self.e2.setAlignment(QtCore.Qt.AlignCenter)
-        self.e2.setFont(font1)
-
-        #Button for clearing fields
-        b2=QtGui.QPushButton(self)
-        b2.setText("RESET")
-        b2.setFont(QtGui.QFont("Times",12,QtGui.QFont.Bold))
-        b2.setGeometry(250,450,100,30)
-        b2.setStyleSheet("QPushButton { background-color : red ;color : white ; }")
-        b2.clicked.connect(self.erase)
-
-        #Button for submission of data
-        b1=QtGui.QPushButton(self)
-        b1.setText("SUBMIT")
-        b1.setFont(QtGui.QFont("Times",12,QtGui.QFont.Bold))
-        b1.setGeometry(450,450,100,30)
-        b1.setStyleSheet("QPushButton { background-color : green;color : white ; }")
-        b1.clicked.connect(self.submit)
+    plt.title('LTP vs U.VALUE')
+    plt.figure(figsize=(3,8))
+    plt.plot(  'Date','LTP', data=frame, marker='*', markerfacecolor='blue', markersize=12, color='skyblue', linewidth=4, label = 'OPTION PRICE')
+    plt.plot(  'Date','UNDERLYING VALUE', data=frame, marker='*', color='olive', linewidth=2, label = 'U VALUE')
+    plt.xticks(rotation = 'vertical')
+    plt.legend(loc = 'upper right')
 
 
-
-    def erase(self):
-        #function for clearing fields and changing to default
-        self.e1.setText("")
-        self.e2.setText("")
-
-    def submit(self):
-        #funcion to run python script
-
-        execute.call_execute(self.e1.text(),self.e2.text())
+    plt.show()
 
 
+'''import os
+from nsepy import get_history
+from datetime import date
+import time
 
 
-if __name__ == '__main__':
-    app = QtGui.QApplication([])
-    gui = RegistrationWindow()
-    gui.show()
-    app.exec_()
+symbol = input("Enter Symbol: ")
+print('\n')
+start = list(map(int,input("Start Date [ year,month,date] [ 2015,1,1 ] ").split(",")))
+print()
+option_type = input('option type? (CE/ PE)')
+end = list(map(int,input("End Date [ year,month,date] [ 2015,1,10 ] ").split(",")))
+print()
+strike_price = int(input("Strike Price "))
+print()
+expiry_date = list(map(int,input("Expiry Date [ year,month,date] [ 2015,1,29 ] ").split(",")))
+
+stock_opt = get_history(symbol,
+                        start=date(start[0],start[1],start[2]),
+                        end=date(end[0],end[1],end[2]),
+                        option_type=option_type,
+                        strike_price=strike_price,
+                        expiry_date=date(expiry_date[0],expiry_date[1],expiry_date[2]))
+
+stock_opt.to_excel('test.xlsx')'''
+#os.system(r'excel.exe C:\Users\Karan\PycharmProjects\calls options\Option-chain-trading-helper-master\test.xlsx
