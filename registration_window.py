@@ -47,14 +47,14 @@ class RegistrationWindow(QtGui.QMainWindow):
         # TAKING THE SYMBOL
         l3= QtGui.QLabel(self)
         l3.setAlignment(QtCore.Qt.AlignCenter)
-        l3.setGeometry(QtCore.QRect(190, 110, 130, 30))
+        l3.setGeometry(QtCore.QRect(60, 110, 300, 30))
         l3.setStyleSheet("QLabel { background-color : purple;color :white ; }")
         font = QtGui.QFont("Times", 14, QtGui.QFont.Bold)
         l3.setFont(font)
         l3.setText("SYMBOL")
 
         self.e4 = QtGui.QLineEdit(self)
-        self.e4.setGeometry(450, 110, 200, 30)
+        self.e4.setGeometry(490, 110, 200, 30)
         self.e4.setAlignment(QtCore.Qt.AlignCenter)
         font1 = QtGui.QFont("Arial", 14)
         self.e4.setFont(font1)
@@ -62,14 +62,14 @@ class RegistrationWindow(QtGui.QMainWindow):
         # EXPIRY
         l4 = QtGui.QLabel(self)
         l4.setAlignment(QtCore.Qt.AlignCenter)
-        l4.setGeometry(QtCore.QRect(190, 160, 130, 30))
+        l4.setGeometry(QtCore.QRect(60, 180, 300, 30))
         l4.setStyleSheet("QLabel { background-color : purple;color :white ; }")
         font = QtGui.QFont("Times", 14, QtGui.QFont.Bold)
         l4.setFont(font)
         l4.setText("EXPIRY DATE (2019-07-25)")
 
         self.e5 = QtGui.QLineEdit(self)
-        self.e5.setGeometry(450, 160, 200, 30)
+        self.e5.setGeometry(490, 180, 200, 30)
         self.e5.setAlignment(QtCore.Qt.AlignCenter)
         font1 = QtGui.QFont("Arial", 14)
         self.e5.setFont(font1)
@@ -77,13 +77,13 @@ class RegistrationWindow(QtGui.QMainWindow):
         #STRIKE PRICE
         l2=QtGui.QLabel(self)
         l2.setAlignment(QtCore.Qt.AlignCenter)
-        l2.setGeometry(QtCore.QRect(190,270,130,30))
+        l2.setGeometry(QtCore.QRect(60,270,300,30))
         l2.setStyleSheet("QLabel { background-color : purple;color :white ; }")
         l2.setFont(font)
         l2.setText("Strike Price")
 
         self.e2=QtGui.QLineEdit(self)
-        self.e2.setGeometry(450,270, 200,30)
+        self.e2.setGeometry(490,270, 200,30)
         self.e2.setAlignment(QtCore.Qt.AlignCenter)
         self.e2.setFont(font1)
 
