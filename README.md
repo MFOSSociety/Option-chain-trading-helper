@@ -8,6 +8,10 @@ A tool to help detect insider trading, by comparing Option Chain Prices against 
 
 ~- Select -> stock options-> symbol of choice -> The Year -> expiry date -> (CE/PE) in option type  (_example: stock options-> BHEL ->~ ~2019 -> 25-07-19 -> CE_)~
 ~- Download the CSV file~
+
+- run registration_window.py 
+- specify the symbol, expiry date of contract, strike price, and check the checkbox for the desired option type (check for PE, uncheck for CE)
+
 - To Run:~
 
 `git clone https://github.com/MFOSSociety/Option-chain-trading-helper.git`
